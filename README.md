@@ -1,6 +1,6 @@
 # Personal Portfolio Website in React
 
-Check it out: https://jasonhsu93.github.io/personal-portfolio/#projects
+Check it out: https://jasonhsu93.github.io/personal-portfolio
 
 Built using:
 
