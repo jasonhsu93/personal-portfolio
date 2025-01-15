@@ -1,5 +1,7 @@
 # Personal Portfolio Website in React
 
+Check it out: https://jasonhsu93.github.io/personal-portfolio/#projects
+
 Built using:
 
 - Front-end library: React
