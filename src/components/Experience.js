@@ -4,6 +4,16 @@ import { Container, Row, Col } from 'react-bootstrap';
 const Experience = () => {
   const experiences = [
     {
+      role: "Machine Learning Developer",
+      company: <a style={{ textDecoration: 'none', color: 'inherit' }} href="https://ubcagrobot.com/" target="_blank" rel="noopener noreferrer">UBC AgroBot ☍</a>,
+      duration: "January 2025 – Present",
+      location: "Vancouver, BC, Canada",
+      achievements: [
+        "Develop an autonomous robot utilizing AI and machine learning for precise intra-row weeding and data collection",
+        "Conducting research on advanced machine learning models to optimize AgroBot’s capabilities, including detecting maize, weeds, and blueberry clusters, and implementing machine vision in the Robot Operating System (ROS)",
+      ]
+    },
+    {
       role: "Tech Review Video Creator",
       company: <a style={{ textDecoration: 'none', color: 'inherit' }} href="https://www.youtube.com/peezs" target="_blank" rel="noopener noreferrer">YouTube Channel Peezs ☍</a>,
       duration: "June 2020 – Present",
