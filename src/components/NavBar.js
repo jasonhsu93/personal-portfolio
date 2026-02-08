@@ -1,72 +1,84 @@
-import { useState, useEffect } from "react";
-import { Navbar, Nav, Container } from "react-bootstrap";
-import logo from '../assets/img/logo.svg';
-import navIcon1 from '../assets/img/nav-icon1.svg';
-import navIcon2 from '../assets/img/github-white-icon.webp';
-import navIcon3 from '../assets/img/nav-icon3.svg';
-import { HashLink } from 'react-router-hash-link';
-import {
-  BrowserRouter as Router
-} from "react-router-dom";
+import { useEffect, useState } from "react";
+
+const NAV_ITEMS = [
+  { label: "Experience", href: "#experience" },
+  { label: "Projects", href: "#projects" },
+  { label: "Tech Stack", href: "#tech" },
+  { label: "About", href: "#about" },
+];
 
 export const NavBar = () => {
-
-  const [activeLink, setActiveLink] = useState('home');
-  const [scrolled, setScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    }
-
-    window.addEventListener("scroll", onScroll);
-
+    const onScroll = () => setIsScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [])
+  }, []);
 
-  const onUpdateActiveLink = (value) => {
-    setActiveLink(value);
-  }
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [menuOpen]);
+
+  const onNavigate = () => setMenuOpen(false);
 
   return (
-    <Router>
-      <Navbar expand="md" className={scrolled ? "scrolled" : ""}>
-        <Container>
-          <Navbar.Brand href="/">
-            <h1 style={{
-              fontSize: '2rem', /* Adjust the font size */
-              fontWeight: 'bold', /* Make the text bold */
-              color: '#fff', /* Set the text color to white */
-              margin: 0, /* Remove default margin */
-              padding: 0, /* Remove default padding */
-              transition: 'color 0.3s ease' /* Add a transition effect */
-            }}>JH</h1>
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav">
-            <span className="navbar-toggler-icon"></span>
-          </Navbar.Toggle>
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ms-auto">
-              <Nav.Link href="#home" className={activeLink === 'home' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('home')}>Home</Nav.Link>
-              <Nav.Link href="#projects" className={activeLink === 'projects' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('projects')}>Projects</Nav.Link>
-              <Nav.Link href="#experience" className={activeLink === 'experience' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('experience')}>Experience</Nav.Link>
-            </Nav>
-            <span className="navbar-text">
-              <div className="social-icon">
-                <a href="https://www.linkedin.com/in/jasonhsu-/" target="_blank" rel="noopener noreferrer"><img src={navIcon1} alt="" /></a>
-                <a href="https://github.com/jasonhsu93" target="_blank" rel="noopener noreferrer"><img src={navIcon2} alt="" /></a>
-              </div>
-              <a href="mailto:jasonhsubusiness@gmail.com">
-                <button className="vvd"><span>Email Me</span></button>
-              </a>
-            </span>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    </Router>
-  )
-}
+    <header className={`siteNav ${isScrolled ? "siteNavScrolled" : ""}`}>
+      <div className="container siteNavInner">
+        <a className="brand" href="#experience" onClick={onNavigate} aria-label="Go to Experience section">
+          <span className="brandMark" aria-hidden="true">JH</span>
+          <span className="brandName">Jason Hsu</span>
+        </a>
+
+        <nav className="navLinks" aria-label="Primary navigation">
+          {NAV_ITEMS.map((item) => (
+            <a key={item.href} href={item.href} onClick={onNavigate}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
+        <div className="navActions">
+          <a className="navCta" href="mailto:jasonhsubusiness@gmail.com">Let’s Talk</a>
+          <button
+            type="button"
+            className="navMenuButton"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobileMenu"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            {menuOpen ? "Close" : "Menu"}
+          </button>
+        </div>
+      </div>
+
+      <div id="mobileMenu" className={`mobileMenu ${menuOpen ? "open" : ""}`}>
+        <div className="container mobileMenuInner">
+          {NAV_ITEMS.map((item) => (
+            <a key={item.href} className="mobileMenuLink" href={item.href} onClick={onNavigate}>
+              {item.label}
+            </a>
+          ))}
+          <div className="mobileMenuDivider" />
+          <a className="mobileMenuLink" href="https://www.linkedin.com/in/jasonhsu-/" target="_blank" rel="noopener noreferrer">
+            LinkedIn
+          </a>
+          <a className="mobileMenuLink" href="https://github.com/jasonhsu93" target="_blank" rel="noopener noreferrer">
+            GitHub
+          </a>
+          <a className="mobileMenuLink" href="mailto:jasonhsubusiness@gmail.com">
+            Email
+          </a>
+        </div>
+      </div>
+    </header>
+  );
+};

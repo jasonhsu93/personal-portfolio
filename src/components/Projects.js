@@ -1,94 +1,96 @@
-import { Container, Row, Col, Tab, Nav } from "react-bootstrap";
-import { ProjectCard } from "./ProjectCard";
-import projImg1 from "../assets/img/demoshot.jpg";
-import projImg2 from "../assets/img/antiyap2.png";
-import projImg3 from "../assets/img/amongus.png";
-import projImg4 from "../assets/img/riscmachine.png";
-import projImg5 from "../assets/img/minesweeper.png";
-import projImg6 from "../assets/img/IoT Concurrent Server.png";
-import colorSharp2 from "../assets/img/color-sharp2.png";
-import 'animate.css';
-import TrackVisibility from 'react-on-screen';
-
 export const Projects = () => {
+  const featured = {
+    label: "Featured Project",
+    title: "BasketBot",
+    description:
+      "🏆 Winner of ProduHacks 2024 (1st / 30 teams). An automatic basketball scorekeeper using computer vision + speech recognition with sub‑16ms tracking latency.",
+    tags: ["Python", "OpenCV", "PyAudio", "TensorFlow"],
+    primaryCta: { label: "View GitHub", href: "https://github.com/04christopher/basketbot" },
+    secondaryCta: { label: "Email Me", href: "mailto:jasonhsubusiness@gmail.com" },
+  };
 
   const projects = [
     {
-      title: "BasketBot",
-      description: "🏆 Winner of ProduHacks 2024! An automatic basketball scorekeeper using computer vision and speech recognition in Python",
-      imgUrl: projImg1,
-      url: "https://github.com/04christopher/basketbot"
+      title: "RoboRacer",
+      description:
+        "1st place autonomous racing stack for NVIDIA Jetson F1TENTH with PID control + safety stops; fine-tuned a YOLOv11s traffic-sign model (1,000+ images) for ~85% real-time accuracy.",
+      tags: ["Python", "C++", "ROS", "YOLO", "OpenCV", "PyTorch", "NumPy"],
+      href: "https://github.com/abhiverma13/RoboRacer",
+      linkLabel: "GitHub",
     },
     {
-      title: "AntiYapAI",
-      description: "An AI-powered web chat application that supports message and chat history summarization using JavaScript, MongoDB, Llama 3.2, Express",
-      imgUrl: projImg2,
-      url: "https://github.com/jasonhsu93/AntiYapAI"
+      title: "MemoSpace",
+      description:
+        "iOS AR app that captures real environments as 3D-mapped points and anchors notes in-world; implemented depth + RGB world-point reconstruction with filtering + deduplication to cut scan noise by ~50%.",
+      tags: ["Swift", "ARKit", "RealityKit", "SceneKit", "Xcode"],
+      href: "https://github.com/stovetopman/nw2026",
+      linkLabel: "GitHub",
     },
     {
-      title: "AmongUs Data Searcher",
-      description: "A web application that allows users to search for in game player data and statistics built with SQL, OracleDB, JavaScript",
-      imgUrl: projImg3,
-      url: "https://github.com/jasonhsu93/AmongUs-Data-Searcher"
-    },
-    {
-      title: "RISC Machine",
-      description: "A RISC machine developed on a DE1-SoC FPGA motherboard that supports basic arithmetic and storing operations, utilizing SystemVerilog",
-      imgUrl: projImg4,
-      url: "https://github.com/jasonhsu93/CPU-Classic-RISC-Pipeline-Machine"
-    },
-    {
-      title: "Minesweeper",
-      description: "A classic minesweeper game built using TypeScript, React",
-      imgUrl: projImg5,
-      url: "https://github.com/jasonhsu93/minesweeper2"
-    },
-    {
-      title: "IoT Concurrent Server",
-      description: "A concurrent server that can connect multiple clients to simulated IoT devices using Java",
-      imgUrl: projImg6,
-      url: "https://github.com/jasonhsu93/IoT-Data-Analytics-Client-Server"
+      title: "CarbonWise",
+      description:
+        "3rd / 16 teams for UX: Android app that scans barcodes and recommends greener alternatives; delivered product info under ~3s for 100,000+ food items with AWS backend + Firebase messaging.",
+      tags: ["Kotlin", "MongoDB", "ML Kit", "Firebase", "AWS"],
+      href: "https://drive.google.com/file/d/1kNyNmZe2dqOa0ifYqepZxrqfE_KoZr_6/view?usp=sharing",
+      linkLabel: "Design Doc",
     },
   ];
 
   return (
-    <section className="project" id="projects">
-      <Container>
-        <Row>
-          <Col size={12}>
-            
-              <div>
-                <h2>Projects</h2>
-                <p>github pages are linked, just click on the coresponding cards if interested~</p>
-                <Tab.Container id="projects-tabs" defaultActiveKey="first">
-                  <Tab.Content id="slideInUp">
-                    <Tab.Pane eventKey="first">
-                      <Row>
-                        {
-                          projects.map((project, index) => {
-                            return (
-                              <ProjectCard
-                                key={index}
-                                {...project}
-                                />
-                            )
-                          })
-                        }
-                      </Row>
-                    </Tab.Pane>
-                    <Tab.Pane eventKey="section">
-                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque quam, quod neque provident velit, rem explicabo excepturi id illo molestiae blanditiis, eligendi dicta officiis asperiores delectus quasi inventore debitis quo.</p>
-                    </Tab.Pane>
-                    <Tab.Pane eventKey="third">
-                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque quam, quod neque provident velit, rem explicabo excepturi id illo molestiae blanditiis, eligendi dicta officiis asperiores delectus quasi inventore debitis quo.</p>
-                    </Tab.Pane>
-                  </Tab.Content>
-                </Tab.Container>
+    <section className="section" id="projects">
+      <div className="container">
+        <header className="sectionHeader">
+          <p className="sectionEyebrow">Selected</p>
+          <h2 className="sectionTitle">PROJECTS</h2>
+          <p className="sectionLead">A few things I’ve built across AR, robotics, and mobile.</p>
+        </header>
+
+        <div className="featuredProject">
+          <div className="featuredContent">
+            <p className="eyebrowOnDark">{featured.label}</p>
+            <h3 className="featuredTitle">{featured.title}</h3>
+            <p className="featuredDesc">{featured.description}</p>
+
+            <div className="tagRow" aria-label="Featured project tech">
+              {featured.tags.map((tag) => (
+                <span key={tag} className="tag">
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            <div className="actions">
+              <a className="btn btnPrimary" href={featured.primaryCta.href} target="_blank" rel="noopener noreferrer">
+                {featured.primaryCta.label}
+              </a>
+              <a className="btn btnSecondary" href={featured.secondaryCta.href}>
+                {featured.secondaryCta.label}
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="projectsGrid" aria-label="Project list">
+          {projects.map((project) => (
+            <article key={project.title} className="projectCard">
+              <div className="projectTitleRow">
+                <h3 className="projectTitle">{project.title}</h3>
+                <a className="projectLink" href={project.href} target="_blank" rel="noopener noreferrer">
+                  {project.linkLabel} ↗
+                </a>
               </div>
-          </Col>
-        </Row>
-      </Container>
-      <img className="background-image-right" src={colorSharp2}></img>
+              <p className="projectDesc">{project.description}</p>
+              <div className="projectTags" aria-label={`${project.title} tech`}>
+                {project.tags.map((tag) => (
+                  <span key={tag} className="projectTag">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
     </section>
-  )
-}
+  );
+};
