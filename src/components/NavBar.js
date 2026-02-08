@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
 const NAV_ITEMS = [
+  { label: "About", href: "#about" },
   { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
   { label: "Tech Stack", href: "#tech" },
-  { label: "About", href: "#about" },
 ];
 
 export const NavBar = () => {
@@ -32,7 +32,7 @@ export const NavBar = () => {
   return (
     <header className={`siteNav ${isScrolled ? "siteNavScrolled" : ""}`}>
       <div className="container siteNavInner">
-        <a className="brand" href="#experience" onClick={onNavigate} aria-label="Go to Experience section">
+        <a className="brand" href="#about" onClick={onNavigate} aria-label="Go to About section">
           <span className="brandMark" aria-hidden="true">JH</span>
           <span className="brandName">Jason Hsu</span>
         </a>

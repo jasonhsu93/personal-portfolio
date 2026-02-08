@@ -404,6 +404,16 @@ button {
   color: rgba(11, 18, 32, 0.82);
 }
 
+.timelineCompanyLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.timelineCompanyLink:hover {
+  text-decoration: underline;
+  text-decoration-color: rgba(10, 132, 255, 0.55);
+}
+
 .timelineMeta {
   margin: 10px 0 0;
   display: flex;
@@ -426,6 +436,74 @@ button {
 
 .timelineBullets li {
   margin: 8px 0;
+}
+
+.timelineSummary {
+  margin: 14px 0 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.timelineSectionTitle {
+  margin: 18px 0 0;
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.timelineChips {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chipSm {
+  padding: 7px 9px;
+  font-size: 12px;
+}
+
+.relatedCard {
+  margin-top: 10px;
+  display: block;
+  padding: 14px;
+  border-radius: calc(var(--radius) - 6px);
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(11, 18, 32, 0.12);
+  box-shadow: 0 14px 28px rgba(12, 29, 71, 0.08);
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.relatedCard:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 42px rgba(10, 132, 255, 0.12);
+  border-color: rgba(10, 132, 255, 0.32);
+}
+
+.relatedTitleRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.relatedTitle {
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.relatedArrow {
+  color: rgba(10, 132, 255, 0.9);
+  font-weight: 900;
+}
+
+.relatedDesc {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--muted);
 }
 
 .inlineLink {
@@ -594,6 +672,17 @@ button {
   box-shadow: 0 14px 26px rgba(0, 0, 0, 0.25);
 }
 
+.btnOutline {
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--text);
+  border-color: rgba(11, 18, 32, 0.14);
+}
+
+.btnOutline:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 26px rgba(11, 18, 32, 0.12);
+}
+
 .projectsGrid {
   margin-top: 16px;
   display: grid;
@@ -758,8 +847,170 @@ button {
 }
 
 /* ---------------- About ---------------- */
-.aboutGrid {
+.aboutHero {
   margin-top: 38px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.aboutCopy {
+  grid-column: span 7;
+  padding: 22px;
+}
+
+.aboutPhotoCard {
+  grid-column: span 5;
+  padding: 18px;
+  grid-row: 1 / span 2;
+}
+
+.aboutEducation {
+  grid-column: span 7;
+  padding: 18px;
+}
+
+.eduTimeline {
+  margin-top: 12px;
+  display: grid;
+  gap: 14px;
+}
+
+.eduItem {
+  padding-top: 12px;
+  border-top: 1px solid rgba(11, 18, 32, 0.08);
+}
+
+.eduItem:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+.eduOrg {
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.eduBullets {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.eduBullets li {
+  margin: 6px 0;
+}
+
+.aboutName {
+  margin: 0;
+  font-size: clamp(26px, 3vw, 34px);
+  font-weight: 950;
+  letter-spacing: -0.03em;
+}
+
+.aboutSubtitle {
+  margin: 8px 0 0;
+}
+
+.aboutParagraphs p {
+  margin: 12px 0 0;
+}
+
+.aboutMiniTitle {
+  margin: 18px 0 0;
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.aboutList {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  line-height: 1.7;
+}
+
+.aboutActions {
+  margin-top: 18px;
+}
+
+.aboutIconActions {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.aboutIconBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(11, 18, 32, 0.14);
+  background: rgba(255, 255, 255, 0.72);
+  color: rgba(11, 18, 32, 0.86);
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+.aboutIconBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 26px rgba(11, 18, 32, 0.12);
+  border-color: rgba(10, 132, 255, 0.36);
+  color: rgba(10, 132, 255, 0.95);
+}
+
+.photoFrame {
+  position: relative;
+  overflow: hidden;
+  border-radius: calc(var(--radius) - 6px);
+  border: 1px solid rgba(11, 18, 32, 0.08);
+  background:
+    radial-gradient(700px 420px at 40% 20%, rgba(10, 132, 255, 0.22), transparent 60%),
+    radial-gradient(520px 420px at 80% 90%, rgba(109, 200, 255, 0.18), transparent 60%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.86) 0%, rgba(246, 251, 255, 0.86) 100%);
+  aspect-ratio: 4 / 5;
+}
+
+.photoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.photoFallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 18px;
+  gap: 8px;
+  color: var(--muted);
+  z-index: 0;
+}
+
+.photoFallbackTitle {
+  font-weight: 900;
+  color: rgba(11, 18, 32, 0.86);
+  letter-spacing: -0.02em;
+}
+
+.photoFallbackHint {
+  font-size: 13px;
+}
+
+.aboutGrid {
+  margin-top: 16px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: 16px;
@@ -769,7 +1020,32 @@ button {
   grid-column: span 6;
 }
 
+.aboutNotes {
+  grid-column: span 7;
+}
+
 @media (max-width: 900px) {
+  .aboutCopy {
+    grid-column: span 12;
+  }
+
+  .aboutPhotoCard {
+    grid-column: span 12;
+    grid-row: auto;
+  }
+
+  .aboutEducation {
+    grid-column: span 12;
+  }
+
+  .photoFrame {
+    aspect-ratio: 1 / 1;
+  }
+
+  .aboutNotes {
+    grid-column: span 12;
+  }
+
   .aboutGrid .card {
     grid-column: span 12;
   }

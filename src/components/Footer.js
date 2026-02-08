@@ -7,7 +7,6 @@ export const Footer = () => {
           <span className="brandMark brandMarkSmall" aria-hidden="true">JH</span>
           <div>
             <div className="footerName">Jason Hsu</div>
-            <div className="footerMeta">Software Engineer Portfolio</div>
           </div>
         </div>
 

@@ -4,70 +4,78 @@ const EXPERIENCES = [
   {
     role: "Software Engineer Intern",
     company: "Korotu Technology",
+    companyUrl: "https://www.korotu.com/",
     location: "Vancouver, BC",
     dates: "May 2025 — Present",
-    achievements: [
+    summary: (
       <>
-        Developed{" "}
+        Built and shipped{" "}
         <a className="inlineLink" href="https://www.korotu.com/carboncruise" target="_blank" rel="noopener noreferrer">
           CarbonCruise
         </a>
-        , an iOS app for forest plot data collection using <strong>ARKit</strong> and <strong>LiDAR</strong> to capture tree
-        diameter, species, and location, enabling around <strong>90%</strong> faster average collection vs. manual
-        measurements.
-      </>,
-      <>
-        Led iOS <strong>ARKit</strong> and <strong>LiDAR</strong> R&amp;D, building a <strong>Swift</strong> point-cloud
-        algorithm that filters background noise and measures trunk diameter in under <strong>100ms</strong> from{" "}
-        <strong>49k</strong> points.
-      </>,
-      <>
-        Architected iOS subscriptions in <strong>Flutter</strong>, integrating <strong>RevenueCat</strong> and{" "}
-        <strong>StoreKit</strong>; validated transactions via <strong>TestFlight</strong> and synced entitlements to the
-        dashboard in under <strong>2s</strong>.
-      </>,
-      <>
-        Drove full lifecycle development in a startup environment, authoring low-level design docs and specifications while
-        adapting to shifting priorities and budget constraints.
-      </>,
-    ],
+        , an iOS augmented reality app that utilized sensors, LiDAR, and camera to capture forestry data. I led the AR R&amp;D by developing a <strong>Swift</strong> point-cloud algorithm capable of automatically 
+        detecting and measuring trunk diameters from real-time AR sessions. I also implemented the app's full subscriptions' flow, enabling users to purchase, manage, and restore subscriptions. I was given much oppurtunities
+        to lead developments, create new features, review processes, and discuss futures of the product with the team.
+      </>
+    ),
+    skills: ["ARKit", "LiDAR", "Swift", "Flutter", "RevenueCat", "StoreKit", "TestFlight"],
+    related: {
+      title: "CarbonCruise",
+      description: "Product page",
+      href: "https://www.korotu.com/carboncruise",
+    },
   },
   {
     role: "Software Developer",
     company: "UBC AgroBot",
     location: "Vancouver, BC",
     dates: "January 2025 — Present",
-    achievements: [
+    summary: (
       <>
-        Engineered a computer vision pipeline using <strong>Python</strong>, <strong>YOLO</strong>, and <strong>OpenCV</strong>
-        , achieving sub <strong>150ms</strong> inference latency for real-time classification of biological targets (pests,
-        pollinators).
-      </>,
-      <>
-        Accelerated R&amp;D by prototyping autonomous navigation stacks in simulated physics engines like{" "}
-        <strong>Gymnasium</strong>, improving stability and safety before hardware deployment of{" "}
-        <a className="inlineLink" href="https://ubcagrobot.com/#/agrobot" target="_blank" rel="noopener noreferrer">
-          AgroBot
-        </a>
-        .
-      </>,
-    ],
+         <a className="inlineLink" href="https://ubcagrobot.com/#/agrobot" target="_blank" rel="noopener noreferrer">
+          UBC AgroBot
+        </a> is a student-led engineering design team dedicated to developing innovative projects in a collaborative environment. 
+        Being part of this team allowed me to connect with like-minded peers while gaining hands-on experience with industry-standard development tools and best practices. 
+        My team and I developed a real-time computer vision pipeline, allowing AgroBot to detect pests and aphids in maize fields. We also explored
+        agentic-based algorithms to efficiently plan the robot's path and actions in the <a className="inlineLink" href="https://www.fieldrobotevent.eu/" target="_blank" rel="noopener noreferrer">
+          FIELD ROBOT EVENT
+        </a> competition in Germany.
+      </>
+    ),
+    skills: ["Python", "YOLO", "OpenCV", "Gymnasium"],
+    related: {
+      title: "AgroBot",
+      description: "Team site",
+      href: "https://ubcagrobot.com/#/agrobot",
+    },
   },
   {
     role: "Partnered Tech Review Content Creator",
-    company: "YouTube (Peezs)",
+    company: "YouTube",
     location: "Vancouver, BC",
     dates: "June 2020 — June 2023",
-    achievements: [
+    summary: (
       <>
-        Managed and scaled{" "}
+        In highschool, my passion for technology and computer brought me to growing{" "}
         <a className="inlineLink" href="https://youtube.com/peezs" target="_blank" rel="noopener noreferrer">
           Peezs
-        </a>{" "}
-        to <strong>5,000+</strong> subscribers, <strong>2.3M+</strong> views, and <strong>67,000+</strong> hours of watch
-        time.
-      </>,
-    ],
+        </a>, eventually scaling to <strong>5,000+</strong> subscribers, <strong>2.3M+</strong> views, and <strong>67,000+</strong>{" "}
+        hours of watch
+        time. I created tech tips, review and unbox videos, where I got the chance to work with sent units from peripheral brands such as{" "}
+        <a className="inlineLink" href="https://roccats.com/" target="_blank" rel="noopener noreferrer">
+         ROCCAT
+        </a> and <a className="inlineLink" href="https://www.xvxchannel.com/" target="_blank" rel="noopener noreferrer">
+        XVX
+        </a>. Thanks to this experience, I got the chance to fulfil my childhood dream and built my first PC at the age of 16. It taught me the resilient, persistent, and self-improving mindset that
+        are necessary to build any successful product or business.
+      </>
+    ),
+    skills: ["Video Production", "Adobe Premiere Pro", "Canva", "CapCut"],
+    related: {
+      title: "Peezs",
+      description: "YouTube Channel",
+      href: "https://youtube.com/peezs",
+    },
   },
 ];
 
@@ -76,9 +84,7 @@ export default function Experience() {
     <section className="section" id="experience">
       <div className="container">
         <header className="sectionHeader">
-          <p className="sectionEyebrow">Highlights</p>
           <h2 className="sectionTitle">EXPERIENCES</h2>
-          <p className="sectionLead">A timeline of internships, teams, and creator work.</p>
         </header>
 
         <div className="timeline" role="list">
@@ -89,17 +95,54 @@ export default function Experience() {
                 <div className="timelineDot" aria-hidden="true" />
                 <div className="timelineCard">
                   <h3 className="timelineRole">{experience.role}</h3>
-                  <p className="timelineCompany">{experience.company}</p>
+                  <p className="timelineCompany">
+                    {experience.companyUrl ? (
+                      <a
+                        className="timelineCompanyLink"
+                        href={experience.companyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {experience.company}
+                      </a>
+                    ) : (
+                      experience.company
+                    )}
+                  </p>
                   <div className="timelineMeta">
                     <span>{experience.dates}</span>
                     <span className="timelineMetaDot" aria-hidden="true">•</span>
                     <span>{experience.location}</span>
                   </div>
-                  <ul className="timelineBullets">
-                    {experience.achievements.map((achievement, idx) => (
-                      <li key={idx}>{achievement}</li>
-                    ))}
-                  </ul>
+                  <p className="timelineSummary">{experience.summary}</p>
+
+                  {experience.skills?.length ? (
+                    <>
+                      <div className="timelineSectionTitle">Skills &amp; Technologies</div>
+                      <div className="timelineChips" aria-label="Skills and technologies">
+                        {experience.skills.map((skill) => (
+                          <span key={skill} className="chip chipSm">
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </>
+                  ) : null}
+
+                  {experience.related ? (
+                    <>
+                      <div className="timelineSectionTitle">Related Media</div>
+                      <a className="relatedCard" href={experience.related.href} target="_blank" rel="noopener noreferrer">
+                        <div className="relatedTitleRow">
+                          <div className="relatedTitle">{experience.related.title}</div>
+                          <div className="relatedArrow" aria-hidden="true">
+                            ↗
+                          </div>
+                        </div>
+                        <div className="relatedDesc">{experience.related.description}</div>
+                      </a>
+                    </>
+                  ) : null}
                 </div>
               </article>
             );
