@@ -1,49 +1,75 @@
-import './App.css';
-import headshotImg from "./assets/img/portfolio photo.JPG";
-import { EnvelopeFill, Linkedin, Github } from "react-bootstrap-icons";
+import "./App.css";
+import { useScrollReveal } from "./hooks/useScrollReveal";
+import headshotImg from "./assets/img/New Profile Picture.JPG";
+import {
+  ArrowDown,
+  ArrowUpRight,
+  Github,
+  Linkedin,
+  GeoAlt,
+} from "react-bootstrap-icons";
 import { NavBar } from "./components/NavBar";
 import { Projects } from "./components/Projects";
 import { Skills } from "./components/Skills";
 import { Footer } from "./components/Footer";
-import Experience from './components/Experience';
+import Experience from "./components/Experience";
 
 function App() {
+  const revealRef = useScrollReveal();
   return (
-    <div className="Site">
-      <a className="skipLink" href="#about">Skip to content</a>
+    <div className="Site" ref={revealRef}>
+      <a className="skipLink" href="#main">
+        Skip to content
+      </a>
       <NavBar />
-      <main className="SiteMain">
-        <section className="section" id="about">
+      <main id="main" tabIndex={-1}>
+        <section
+          className="hero section"
+          id="about"
+          aria-labelledby="hero-title"
+        >
           <div className="container">
-            <header className="sectionHeader">
-              <h2 className="sectionTitle">ABOUT</h2>
-            </header>
-
-            <div className="aboutHero">
-              <div className="card aboutCopy">
-                <h3 className="aboutName">I'm Jason</h3>
-
-                <div className="aboutParagraphs">
-                  <p className="muted">
-                    I have previous software development experience at{" "}
-                    <a className="inlineLink" href="https://www.korotu.com/" target="_blank" rel="noopener noreferrer">
-                      Korotu Technology
-                    </a>
-                    , a tech start-up, where I worked on an iOS augmented reality app that utilized sensors, LiDAR, and camera to capture forestry data. I got to break-down problems, build
-                    practical algorithms, and construct solutions using limited resources and data.
-                  </p>
-                  <p className="muted">
-                    I enjoy trying new tech products and building things like Lego and Gundam! I also enjoy playing sports such as
-                    basketball, table tennis, baseball, snowboarding, and riding my motorcycle in the breeze whenever I am free.
-                  </p>
-                </div>
-
-                <div className="aboutIconActions" aria-label="Quick links">
-                  <a className="aboutIconBtn" href="mailto:jasonhsubusiness@gmail.com" aria-label="Email Jason">
-                    <EnvelopeFill size={18} />
+            <div className="heroGrid">
+              <div className="heroCopy">
+                <p className="eyebrow">
+                  <span className="statusDot" /> Computer engineering · UBC
+                </p>
+                <h1 id="hero-title">
+                  Hi, I’m
+                  <br />
+                  <span>Jason Hsu.</span>
+                </h1>
+                <p className="heroDescription">
+                  I build software that connects the digital and physical
+                  worlds. From measuring forests with LiDAR to teaching robots
+                  to navigate, I enjoy turning complex problems into practical
+                  tools.
+                </p>
+                <div className="heroActions">
+                  <a className="btn btnPrimary" href="#projects">
+                    Explore my work <ArrowDown aria-hidden="true" />
                   </a>
                   <a
-                    className="aboutIconBtn"
+                    className="textLink"
+                    href="mailto:jasonhsubusiness@gmail.com"
+                  >
+                    Let’s connect <ArrowUpRight aria-hidden="true" />
+                  </a>
+                </div>
+                <div className="heroSocials">
+                  <span>
+                    <GeoAlt aria-hidden="true" /> Vancouver, BC
+                  </span>
+                  <span className="socialDivider" aria-hidden="true" />
+                  <a
+                    href="https://github.com/jasonhsu93"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="GitHub profile"
+                  >
+                    <Github size={19} />
+                  </a>
+                  <a
                     href="https://www.linkedin.com/in/jasonhsu-/"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -51,63 +77,79 @@ function App() {
                   >
                     <Linkedin size={18} />
                   </a>
-                  <a
-                    className="aboutIconBtn"
-                    href="https://github.com/jasonhsu93"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="GitHub profile"
-                  >
-                    <Github size={18} />
-                  </a>
                 </div>
               </div>
-
-              <div className="card aboutPhotoCard" aria-label="Headshot">
+              <figure className="heroPortrait">
                 <div className="photoFrame">
                   <img
                     className="photoImg"
                     src={headshotImg}
-                    alt="Jason Hsu headshot"
-                    onError={(e) => {
-                      e.currentTarget.style.display = "none";
-                    }}
+                    alt="Jason Hsu at a baseball stadium"
+                    fetchpriority="high"
                   />
-                  <div className="photoFallback">
-                    <div className="photoFallbackTitle">Add a headshot</div>
-                    <div className="photoFallbackHint">Replace src/assets/img/portfolio photo.JPG</div>
-                  </div>
+                  <span className="photoLabel">
+                    A little beyond the keyboard.
+                  </span>
                 </div>
-              </div>
-
-			              <div className="card aboutEducation">
-			                <h3 className="cardTitle">Education</h3>
-			                <div className="eduTimeline">
-			                  <div className="eduItem">
-			                    <div className="eduOrg">University of British Columbia</div>
-			                    <div className="timelineMeta">
-			                      <span>B.A.Sc. Computer Engineering (4th-year)</span>
-			                      <span className="timelineMetaDot" aria-hidden="true">•</span>
-			                      <span>Expected May 2027</span>
-			                      <span className="timelineMetaDot" aria-hidden="true">•</span>
-			                      <span>Vancouver, BC</span>
-			                    </div>
-			                  </div>
-
-			                  <div className="eduItem">
-			                    <div className="eduOrg">University of Tsukuba</div>
-			                    <div className="timelineMeta">
-			                      <span>Exchange, College of Information Science</span>
-			                      <span className="timelineMetaDot" aria-hidden="true">•</span>
-			                      <span>Apr 2026 - Aug 2026</span>
-			                      <span className="timelineMetaDot" aria-hidden="true">•</span>
-			                      <span>Tokyo, Japan</span>
-			                    </div>
-			                  </div>
-			                </div>
-			              </div>
+                <figcaption>
+                  <span>Software, hardware & everything in between.</span>
+                  <span aria-hidden="true">↗</span>
+                </figcaption>
+              </figure>
             </div>
-
+            <div className="aboutNote">
+              <p className="eyebrow">A little about me</p>
+              <p>
+                Previously, I developed iOS AR and LiDAR features at{" "}
+                <a
+                  className="inlineLink"
+                  href="https://www.korotu.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Korotu Technology
+                </a>
+                . Away from code, you’ll find me building Lego and Gundam,
+                trying new tech, playing basketball, table tennis or baseball,
+                snowboarding, or out on my motorcycle.
+              </p>
+            </div>
+            <div className="education" aria-labelledby="education-title">
+              <h2 className="eyebrow" id="education-title">
+                Education
+              </h2>
+              <div className="educationGrid">
+                <article className="educationItem">
+                  <div className="educationTop">
+                    <span className="educationMark">UBC</span>
+                    <span className="smallLabel">Expected May 2027</span>
+                  </div>
+                  <h3>University of British Columbia</h3>
+                  <p>Bachelor of Applied Science · Computer Engineering</p>
+                  <p className="educationDetail">
+                    Dean’s Honour List · Go Global International Learning
+                    Programs Award
+                  </p>
+                  <p className="educationDetail">
+                    Coursework: Relational Databases, Computer Communications,
+                    Operating Systems, Intro to Cybersecurity
+                  </p>
+                </article>
+                <article className="educationItem">
+                  <div className="educationTop">
+                    <span className="educationMark">筑波</span>
+                    <span className="smallLabel">
+                      Go Global Exchange · 2026
+                    </span>
+                  </div>
+                  <h3>University of Tsukuba</h3>
+                  <p>Computer &amp; Information Science · Japan</p>
+                  <p className="educationDetail">
+                    Met and discussed with people from all over the world.
+                  </p>
+                </article>
+              </div>
+            </div>
           </div>
         </section>
         <Experience />

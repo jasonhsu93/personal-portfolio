@@ -5,8 +5,14 @@ export const Projects = () => {
     description:
       "🏆 Winner of ProduHacks 2024 (1st / 30 teams). An automatic basketball scorekeeper using computer vision + speech recognition with sub‑16ms tracking latency.",
     tags: ["Python", "OpenCV", "PyAudio", "TensorFlow"],
-    primaryCta: { label: "View GitHub", href: "https://github.com/04christopher/basketbot" },
-    secondaryCta: { label: "Email Me", href: "mailto:jasonhsubusiness@gmail.com" },
+    primaryCta: {
+      label: "View GitHub",
+      href: "https://github.com/04christopher/basketbot",
+    },
+    secondaryCta: {
+      label: "Email Me",
+      href: "mailto:jasonhsubusiness@gmail.com",
+    },
   };
 
   const projects = [
@@ -37,12 +43,24 @@ export const Projects = () => {
   ];
 
   return (
-    <section className="section" id="projects">
+    <section
+      className="section projectsSection"
+      id="projects"
+      aria-labelledby="projects-title"
+    >
       <div className="container">
         <header className="sectionHeader">
-          <p className="sectionEyebrow">Selected</p>
-          <h2 className="sectionTitle">PROJECTS</h2>
-          <p className="sectionLead">A few things I’ve built across AR, robotics, and mobile.</p>
+          <div>
+            <p className="eyebrow">02 / Selected projects</p>
+            <h2 className="sectionTitle" id="projects-title">
+              Ideas into reality.
+            </h2>
+          </div>
+          <p className="sectionLead">
+            A few things I’ve built
+            <br />
+            across AR, robotics, and mobile.
+          </p>
         </header>
 
         <div className="featuredProject">
@@ -60,7 +78,12 @@ export const Projects = () => {
             </div>
 
             <div className="actions">
-              <a className="btn btnPrimary" href={featured.primaryCta.href} target="_blank" rel="noopener noreferrer">
+              <a
+                className="btn btnPrimary"
+                href={featured.primaryCta.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {featured.primaryCta.label}
               </a>
               <a className="btn btnSecondary" href={featured.secondaryCta.href}>
@@ -68,14 +91,32 @@ export const Projects = () => {
               </a>
             </div>
           </div>
+          <div className="basketGraphic" aria-hidden="true">
+            <div className="courtLine" />
+            <div className="courtCircle" />
+            <div className="basketball">
+              <i />
+              <b />
+            </div>
+            <span>COMPUTER VISION × BASKETBALL</span>
+          </div>
         </div>
 
         <div className="projectsGrid" aria-label="Project list">
-          {projects.map((project) => (
+          {projects.map((project, index) => (
             <article key={project.title} className="projectCard">
+              <span className="projectNumber" aria-hidden="true">
+                0{index + 2} / BUILD
+              </span>
               <div className="projectTitleRow">
                 <h3 className="projectTitle">{project.title}</h3>
-                <a className="projectLink" href={project.href} target="_blank" rel="noopener noreferrer">
+                <a
+                  className="projectLink"
+                  aria-label={`${project.title} ${project.linkLabel}`}
+                  href={project.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {project.linkLabel} ↗
                 </a>
               </div>
@@ -90,6 +131,35 @@ export const Projects = () => {
             </article>
           ))}
         </div>
+        <aside className="creatorNote" aria-label="Peezs tech review channel">
+          <div>
+            <p className="eyebrow">Beyond the code</p>
+            <h3>Peezs — Tech Review Channel</h3>
+            <p>Sharing my curiosity for technology through reviews.</p>
+            <a
+              className="textLink"
+              href="https://youtube.com/peezs"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Visit the channel ↗
+            </a>
+          </div>
+          <div className="creatorStats">
+            <div>
+              <strong>5K+</strong>
+              <span>subscribers</span>
+            </div>
+            <div>
+              <strong>2.3M+</strong>
+              <span>views</span>
+            </div>
+            <div>
+              <strong>67K+</strong>
+              <span>watch hours</span>
+            </div>
+          </div>
+        </aside>
       </div>
     </section>
   );
