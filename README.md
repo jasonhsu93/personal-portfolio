@@ -2,7 +2,7 @@
 
 A responsive React portfolio with experience, selected projects, education, and technical skills.
 
-Live site: https://jasonhsu93.github.io/personal-portfolio
+Live site: https://jasonhsu.ca
 
 ## Local development
 
@@ -11,7 +11,7 @@ npm ci
 npm start
 ```
 
-Open http://localhost:3000. Run `npm run build` for a production build, or `npm test -- --watchAll=false` for the tests. The production asset paths support GitHub Pages at `/personal-portfolio/`.
+Open http://localhost:3000. Run `npm run build` for a production build, or `npm test -- --watchAll=false` for the tests. The production build is configured for the custom domain `jasonhsu.ca`.
 
 ## Content and design
 
