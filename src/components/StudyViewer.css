@@ -85,3 +85,10 @@
 @media (prefers-reduced-motion: reduce) {
   .range-sweep, .capture-pulse { animation: none; }
 }
+
+.practice-switch { pointer-events: auto; cursor: pointer; padding: .45rem .7rem; min-height: 2.25rem; background: #1b3227; border-color: #a9bf9f; text-decoration: underline; text-underline-offset: .2em; }
+.practice-switch:hover { background: #304b39; }
+.aim-marker { position: absolute; z-index: 4; width: .95rem; height: .95rem; transform: translate(-50%,-50%); border: 2px solid #fff3a5; outline: 1px solid #2f2915; border-radius: 50%; pointer-events: none; }
+.shot-aim { display: flex; gap: .85rem; align-items: center; padding: .5rem 1rem 0; color: #e6eddd; font-size: .92rem; }
+.shot-aim input { accent-color: #d8e9b7; min-width: 0; flex: 1; min-height: 1.65rem; }
+.demo-action:disabled { opacity: .65; cursor: default; }

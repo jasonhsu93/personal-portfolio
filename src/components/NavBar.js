@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Envelope, List, X } from "react-bootstrap-icons";
 import { contact, resumeUrl } from "../data/portfolio";
 
-const sections = [{ label: "Work", href: "#projects" }, { label: "About", href: "#about" }];
+const sections = [{ label: "Work", href: "#projects" }, { label: "Experience", href: "#experience" }, { label: "About", href: "#about" }];
 
 export function NavBar() {
   const [open, setOpen] = useState(false);

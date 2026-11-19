@@ -4,7 +4,7 @@ import { durationMs, replayFrame, shotMs } from "./data/basketballReplay";
 
 test("shows recent work, outcomes and a résumé on first render", () => {
   render(<App />);
-  expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("I build software");
+  expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Jason Hsu");
   const work = screen.getByRole("region", { name: "Selected work" });
   for (const title of ["CarbonCruise", "BasketBot", "UBC AgroBot"]) {
     expect(within(work).getByRole("heading", { name: title })).toBeInTheDocument();
@@ -13,6 +13,16 @@ test("shows recent work, outcomes and a résumé on first render", () => {
     expect(within(work).getByText(metric)).toBeVisible();
   }
   expect(screen.getByRole("link", { name: "Résumé (PDF)" })).toHaveAttribute("href", expect.stringMatching(/Jason-Hsu-Resume\.pdf$/));
+});
+
+test("project cards expose the demos before opening details and experience navigation reaches the timeline", () => {
+  render(<App />);
+  const work = screen.getByRole("region", { name: "Selected work" });
+  expect(within(work).getByRole("link", { name: "Try measuring a tree" })).toHaveAttribute("href", "#demo-carboncruise");
+  expect(within(work).getByRole("link", { name: "Try automatic scoring" })).toHaveAttribute("href", "#demo-basketbot");
+  const nav = screen.getByRole("navigation", { name: "Primary navigation" });
+  const target = within(nav).getByRole("link", { name: "Experience" }).getAttribute("href");
+  expect(document.querySelector(target)).toHaveAccessibleName(/Experience & education/);
 });
 
 test("a trunk tap produces an immediate diameter and retake returns to live view", () => {
@@ -85,11 +95,34 @@ test("reduced motion offers shot-by-shot scoring without autoplay", () => {
   } finally { window.matchMedia = original; }
 });
 
+test("a visitor's aim determines the score and returning to replay resets the game", () => {
+  const original = window.matchMedia;
+  window.matchMedia = jest.fn(() => ({ matches: true }));
+  try {
+    render(<App />);
+    fireEvent.click(screen.getByRole("button", { name: "BasketBot" }));
+    fireEvent.click(screen.getByRole("button", { name: "Take a shot" }));
+    const aim = screen.getByRole("slider", { name: "Aim your shot" });
+    const shoot = screen.getByRole("button", { name: "Shoot" });
+    fireEvent.change(aim, { target: { value: "0" } });
+    fireEvent.click(shoot);
+    expect(screen.getByLabelText("Score 1")).toBeVisible();
+    fireEvent.change(aim, { target: { value: "15" } });
+    fireEvent.click(shoot);
+    expect(screen.getByText("Miss · score holds")).toBeVisible();
+    expect(screen.getByLabelText("Score 1")).toBeVisible();
+    expect(screen.getByText("Shots taken · 2")).toBeVisible();
+    fireEvent.click(screen.getByRole("button", { name: "Watch replay" }));
+    expect(screen.getByLabelText("Score 0")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Next shot" })).toBeVisible();
+  } finally { window.matchMedia = original; }
+});
+
 test("an entry reveals its role, dates and original project link", () => {
   render(<App />);
   const entry = document.getElementById("carboncruise");
   fireEvent.click(entry.querySelector("summary"));
-  expect(entry).toHaveAttribute("open");
+  expect(entry.querySelector("details")).toHaveAttribute("open");
   expect(within(entry).getByText("May 2025 – April 2026")).toBeVisible();
   expect(within(entry).getByRole("link", { name: "Visit CarbonCruise" })).toHaveAttribute("href", "https://www.korotu.com/carboncruise");
 });

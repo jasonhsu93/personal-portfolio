@@ -48,16 +48,23 @@ function findBasketTime(shot) {
 // Deriving the score from crossing times makes pausing, seeking, and dropped
 // render frames safe. Rendering a frame twice cannot count a basket twice.
 const basketTimes = attempts.map(findBasketTime);
-export function replayFrame(elapsed) {
-  const time = Math.max(0, Math.min(elapsed, durationMs));
-  const index = Math.min(Math.floor(time / shotMs), shotCount - 1);
+export function aimedReplay(offset) {
+  const shot = { ...attempts[0], offset };
+  return { shots: [shot], crossings: [findBasketTime(shot)] };
+}
+
+const automaticReplay = { shots: attempts, crossings: basketTimes };
+export function replayFrame(elapsed, { shots, crossings } = automaticReplay) {
+  const end = shotMs * shots.length;
+  const time = Math.max(0, Math.min(elapsed, end));
+  const index = Math.min(Math.floor(time / shotMs), shots.length - 1);
   const local = time - index * shotMs;
   const t = Math.min(local / flightMs, 1);
-  const shot = attempts[index];
-  const basketTime = basketTimes[index];
+  const shot = shots[index];
+  const basketTime = crossings[index];
   const scored = basketTime !== null && local >= basketTime;
   const missed = basketTime === null && local >= flightMs * (rimTime + 0.10);
-  const score = basketTimes.filter((at, i) => at !== null && time >= i * shotMs + at).length;
+  const score = crossings.filter((at, i) => at !== null && time >= i * shotMs + at).length;
   const trail = Array.from({ length: 6 }, (_, i) => ballAt(shot, Math.max(0, t - (6 - i) * 0.018)));
-  return { ball: ballAt(shot, t), trail, t, index, score, scored, missed, ballVisible: local < flightMs, done: time >= durationMs };
+  return { ball: ballAt(shot, t), trail, t, index, score, scored, missed, ballVisible: local < flightMs, done: time >= end };
 }
