@@ -1,166 +1,45 @@
-export const Projects = () => {
-  const featured = {
-    label: "Featured Project",
-    title: "BasketBot",
-    description:
-      "🏆 Winner of ProduHacks 2024 (1st / 30 teams). An automatic basketball scorekeeper using computer vision + speech recognition with sub‑16ms tracking latency.",
-    tags: ["Python", "OpenCV", "PyAudio", "TensorFlow"],
-    primaryCta: {
-      label: "View GitHub",
-      href: "https://github.com/04christopher/basketbot",
-    },
-    secondaryCta: {
-      label: "Email Me",
-      href: "mailto:jasonhsubusiness@gmail.com",
-    },
-  };
+import { additionalWork, mediaUrl, selectedWork } from "../data/portfolio";
 
-  const projects = [
-    {
-      title: "RoboRacer",
-      description:
-        "1st place autonomous racing stack for NVIDIA Jetson F1TENTH with PID control + safety stops; fine-tuned a YOLOv11s traffic-sign model (1,000+ images) for ~85% real-time accuracy.",
-      tags: ["Python", "C++", "ROS", "YOLO", "OpenCV", "PyTorch", "NumPy"],
-      href: "https://github.com/abhiverma13/RoboRacer",
-      linkLabel: "GitHub",
-    },
-    {
-      title: "MemoSpace",
-      description:
-        "iOS AR app that captures real environments as 3D-mapped points and anchors notes in-world; implemented depth + RGB world-point reconstruction with filtering + deduplication to cut scan noise by ~50%.",
-      tags: ["Swift", "ARKit", "RealityKit", "SceneKit", "Xcode"],
-      href: "https://github.com/stovetopman/nw2026",
-      linkLabel: "GitHub",
-    },
-    {
-      title: "CarbonWise",
-      description:
-        "3rd / 16 teams for UX: Android app that scans barcodes and recommends greener alternatives; delivered product info under ~3s for 100,000+ food items with AWS backend + Firebase messaging.",
-      tags: ["Kotlin", "MongoDB", "ML Kit", "Firebase", "AWS"],
-      href: "https://drive.google.com/file/d/1kNyNmZe2dqOa0ifYqepZxrqfE_KoZr_6/view?usp=sharing",
-      linkLabel: "Design Doc",
-    },
-  ];
-
+function WorkEntry({ project }) {
+  const [primaryLink, ...moreLinks] = project.links;
+  const photo = project.id === "basketbot" ? "basketbot-demo.webp" : project.preview;
   return (
-    <section
-      className="section projectsSection"
-      id="projects"
-      aria-labelledby="projects-title"
-    >
-      <div className="container">
-        <header className="sectionHeader">
-          <div>
-            <p className="eyebrow">02 / Selected projects</p>
-            <h2 className="sectionTitle" id="projects-title">
-              Ideas into reality.
-            </h2>
-          </div>
-          <p className="sectionLead">
-            A few things I’ve built
-            <br />
-            across AR, robotics, and mobile.
-          </p>
-        </header>
-
-        <div className="featuredProject">
-          <div className="featuredContent">
-            <p className="eyebrowOnDark">{featured.label}</p>
-            <h3 className="featuredTitle">{featured.title}</h3>
-            <p className="featuredDesc">{featured.description}</p>
-
-            <div className="tagRow" aria-label="Featured project tech">
-              {featured.tags.map((tag) => (
-                <span key={tag} className="tag">
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            <div className="actions">
-              <a
-                className="btn btnPrimary"
-                href={featured.primaryCta.href}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {featured.primaryCta.label}
-              </a>
-              <a className="btn btnSecondary" href={featured.secondaryCta.href}>
-                {featured.secondaryCta.label}
-              </a>
-            </div>
-          </div>
-          <div className="basketGraphic" aria-hidden="true">
-            <div className="courtLine" />
-            <div className="courtCircle" />
-            <div className="basketball">
-              <i />
-              <b />
-            </div>
-            <span>COMPUTER VISION × BASKETBALL</span>
-          </div>
+    <article className="project-card" id={project.id}>
+      <img className="project-image" src={mediaUrl(photo)} width="460" height="250" alt={project.id === "basketbot" ? "Original BasketBot footage showing the ball and hoop outlined on court." : ""} loading="lazy" />
+      <div className="card-body">
+        <span className="work-context">{project.context}</span>
+        <h3>{project.title}</h3>
+        <p className="project-intro">{project.description}</p>
+        <p className="project-result"><strong>{project.outcome}</strong><span>{project.measure}</span></p>
+        <a className="project-primary" href={primaryLink.href}>{primaryLink.label}</a>
+      </div>
+      <details className="project-detail">
+        <summary>Technical details<span className="small-plus" aria-hidden="true" /></summary>
+        <div className="detail-content">
+          <p className="role"><strong>{project.role}</strong><span>{project.dates}</span></p>
+          <p>{project.detail}</p>
+          <ul className="tool-list" aria-label={project.title + " technologies"}>{project.tools.map((tool) => <li key={tool}>{tool}</li>)}</ul>
+          {moreLinks.length > 0 && <div className="entry-links">{moreLinks.map((link) => <a href={link.href} key={link.href}>{link.label}</a>)}</div>}
         </div>
+      </details>
+    </article>
+  );
+}
 
-        <div className="projectsGrid" aria-label="Project list">
-          {projects.map((project, index) => (
-            <article key={project.title} className="projectCard">
-              <span className="projectNumber" aria-hidden="true">
-                0{index + 2} / BUILD
-              </span>
-              <div className="projectTitleRow">
-                <h3 className="projectTitle">{project.title}</h3>
-                <a
-                  className="projectLink"
-                  aria-label={`${project.title} ${project.linkLabel}`}
-                  href={project.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {project.linkLabel} ↗
-                </a>
-              </div>
-              <p className="projectDesc">{project.description}</p>
-              <div className="projectTags" aria-label={`${project.title} tech`}>
-                {project.tags.map((tag) => (
-                  <span key={tag} className="projectTag">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </article>
-          ))}
-        </div>
-        <aside className="creatorNote" aria-label="Peezs tech review channel">
-          <div>
-            <p className="eyebrow">Beyond the code</p>
-            <h3>Peezs — Tech Review Channel</h3>
-            <p>Sharing my curiosity for technology through reviews.</p>
-            <a
-              className="textLink"
-              href="https://youtube.com/peezs"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Visit the channel ↗
-            </a>
-          </div>
-          <div className="creatorStats">
-            <div>
-              <strong>5K+</strong>
-              <span>subscribers</span>
-            </div>
-            <div>
-              <strong>2.3M+</strong>
-              <span>views</span>
-            </div>
-            <div>
-              <strong>67K+</strong>
-              <span>watch hours</span>
-            </div>
-          </div>
-        </aside>
+export function Projects() {
+  return (
+    <section id="projects" className="work-section" aria-labelledby="projects-title">
+      <div className="wrap">
+        <div className="section-heading"><h2 id="projects-title">Selected work<span className="period" aria-hidden="true">.</span></h2><span className="section-date">2024 — 2026</span></div>
+        <div className="project-grid">{selectedWork.map((project) => <WorkEntry key={project.id} project={project} />)}</div>
+        <details className="more-projects">
+          <summary><span>More projects</span><span className="small-plus" aria-hidden="true" /></summary>
+          <ul>{additionalWork.map((project) => <li key={project.title}>
+            <div><h3>{project.title}</h3><p>{project.description}</p></div>
+            <a href={project.href} aria-label={project.label + " for " + project.title}>{project.label}</a>
+          </li>)}</ul>
+        </details>
       </div>
     </section>
   );
-};
+}
