@@ -1,5 +1,6 @@
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import App from "./App";
+import { durationMs, replayFrame, shotMs } from "./data/basketballReplay";
 
 test("shows recent work, outcomes and a résumé on first render", () => {
   render(<App />);
@@ -8,24 +9,80 @@ test("shows recent work, outcomes and a résumé on first render", () => {
   for (const title of ["CarbonCruise", "BasketBot", "UBC AgroBot"]) {
     expect(within(work).getByRole("heading", { name: title })).toBeInTheDocument();
   }
-  for (const metric of ["49K points", "1st of 30", "58% fewer"]) {
+  for (const metric of ["49K points", "1st place", "58% fewer"]) {
     expect(within(work).getByText(metric)).toBeVisible();
   }
   expect(screen.getByRole("link", { name: "Résumé (PDF)" })).toHaveAttribute("href", expect.stringMatching(/Jason-Hsu-Resume\.pdf$/));
 });
 
-test("switches both the study and its accessible caption", () => {
+test("a trunk tap produces an immediate diameter and retake returns to live view", () => {
   render(<App />);
-  const forest = screen.getByRole("button", { name: "Forest" });
-  const court = screen.getByRole("button", { name: "Court" });
-  expect(forest).toHaveAttribute("aria-pressed", "true");
-  fireEvent.click(court);
-  expect(court).toHaveAttribute("aria-pressed", "true");
-  expect(forest).toHaveAttribute("aria-pressed", "false");
-  expect(screen.getByRole("img", { name: /shot trajectory/ })).toHaveAttribute("src", expect.stringMatching(/court-study\.webp$/));
-  expect(screen.getByText("Trajectory illustration")).toBeVisible();
-  fireEvent.click(forest);
-  expect(screen.getByText("LiDAR illustration")).toBeVisible();
+  fireEvent.click(screen.getByRole("button", { name: "Measure center trunk" }));
+  expect(screen.getByText("43.7 cm diameter")).toBeVisible();
+  fireEvent.click(screen.getByRole("button", { name: "Measure right trunk" }));
+  expect(screen.getByText("22.9 cm diameter")).toBeVisible();
+  fireEvent.click(screen.getByRole("button", { name: "Retake the tree measurement" }));
+  expect(screen.getByText("Live view")).toBeVisible();
+  fireEvent.click(screen.getByRole("button", { name: "Capture tree diameter" }));
+  expect(screen.getByText("22.9 cm diameter")).toBeVisible();
+  fireEvent.pointerDown(screen.getByAltText(/foreground trunks/));
+  expect(screen.getByText("Aim at a foreground trunk")).toBeVisible();
+  expect(screen.queryByText("22.9 cm diameter")).not.toBeInTheDocument();
+});
+
+test("basket detection counts downward passes once and leaves a miss uncounted", () => {
+  expect(replayFrame(0).score).toBe(0);
+  expect(replayFrame(1600).score).toBe(0);
+  expect(replayFrame(shotMs - 1)).toMatchObject({ score: 1, scored: true });
+  expect(replayFrame(shotMs * 2 - 1)).toMatchObject({ score: 1, missed: true });
+  expect(replayFrame(durationMs)).toMatchObject({ score: 2, scored: true, done: true });
+  expect(replayFrame(durationMs + 4000).score).toBe(2);
+});
+
+test("the tracker runs automatically, pauses, resumes and replays at zero", () => {
+  let nextFrame;
+  const request = jest.spyOn(window, "requestAnimationFrame").mockImplementation((callback) => { nextFrame = callback; return 1; });
+  const cancel = jest.spyOn(window, "cancelAnimationFrame").mockImplementation(() => { nextFrame = null; });
+  try {
+    render(<App />);
+    fireEvent.click(screen.getByRole("button", { name: "BasketBot" }));
+    expect(screen.getByLabelText("Score 0")).toBeVisible();
+    act(() => { nextFrame(0); nextFrame(shotMs - 1); });
+    expect(screen.getByLabelText("Score 1")).toBeVisible();
+    fireEvent.click(screen.getByRole("button", { name: "Pause shot sequence" }));
+    expect(nextFrame).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Play shot sequence" }));
+    act(() => { nextFrame(9000); nextFrame(9000 + shotMs); });
+    expect(screen.getByText("Miss · score holds")).toBeVisible();
+    expect(screen.getByLabelText("Score 1")).toBeVisible();
+    act(() => { nextFrame(9000 + durationMs); });
+    expect(screen.getByText("2 baskets in 3 shots")).toBeVisible();
+    fireEvent.click(screen.getByRole("button", { name: "Replay shot sequence" }));
+    expect(screen.getByLabelText("Score 0")).toBeVisible();
+    fireEvent.click(screen.getByRole("button", { name: "CarbonCruise" }));
+    expect(nextFrame).toBeNull();
+  } finally {
+    request.mockRestore();
+    cancel.mockRestore();
+  }
+});
+
+test("reduced motion offers shot-by-shot scoring without autoplay", () => {
+  const original = window.matchMedia;
+  window.matchMedia = jest.fn(() => ({ matches: true }));
+  try {
+    render(<App />);
+    fireEvent.click(screen.getByRole("button", { name: "BasketBot" }));
+    const next = screen.getByRole("button", { name: "Next shot" });
+    fireEvent.click(next);
+    expect(screen.getByLabelText("Score 1")).toBeVisible();
+    fireEvent.click(next);
+    expect(screen.getByText("Miss · score holds")).toBeVisible();
+    fireEvent.click(next);
+    expect(screen.getByText("2 baskets in 3 shots")).toBeVisible();
+    fireEvent.click(screen.getByRole("button", { name: "Replay shot sequence" }));
+    expect(screen.getByLabelText("Score 0")).toBeVisible();
+  } finally { window.matchMedia = original; }
 });
 
 test("an entry reveals its role, dates and original project link", () => {

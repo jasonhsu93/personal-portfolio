@@ -31,7 +31,7 @@ export default function App() {
             <p>These days I’m finishing my degree at UBC after an exchange at the University of Tsukuba. Away from my desk, I’m usually playing basketball or building a Gundam kit.</p>
             <Skills />
           </div>
-          <figure className="court-photo"><img src={mediaUrl("basketbot-demo.webp")} width="1050" height="583" loading="lazy" alt="BasketBot demo footage showing a ball and hoop outlined by the tracking software on an outdoor court." /><figcaption><span>From the camera roll</span><strong>BasketBot on the court · 2024</strong></figcaption></figure>
+          <figure className="court-photo"><img src={mediaUrl("basketbot-demo.webp")} width="1050" height="583" loading="lazy" alt="BasketBot demo footage showing a ball and hoop outlined by the tracking software on an outdoor court." /><figcaption><strong>BasketBot on the court · 2024</strong><a href="#demo-basketbot">Open tracking demo</a></figcaption></figure>
         </section>
       </main>
       <Footer />
