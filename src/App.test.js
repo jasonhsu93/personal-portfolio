@@ -1,89 +1,53 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import App from "./App";
 
-test("renders the portfolio and resume experience dates", () => {
+test("shows recent work, outcomes and a résumé on first render", () => {
   render(<App />);
-  expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-    "Jason Hsu",
-  );
-  for (const name of [
-    "Learning through real-world experience.",
-    "Ideas into reality.",
-    "The tools I work with.",
-  ]) {
-    expect(screen.getByRole("heading", { level: 2, name })).toBeInTheDocument();
+  expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("I build software");
+  const work = screen.getByRole("region", { name: "Selected work" });
+  for (const title of ["CarbonCruise", "BasketBot", "UBC AgroBot"]) {
+    expect(within(work).getByRole("heading", { name: title })).toBeInTheDocument();
   }
-  const experience = screen.getByRole("region", {
-    name: "Learning through real-world experience.",
-  });
-  expect(within(experience).getByText("April 2026")).toBeInTheDocument();
-  expect(within(experience).getByText("March 2026")).toBeInTheDocument();
-  expect(
-    within(experience).getByRole("heading", {
-      name: "Reinforcement Learning Developer",
-    }),
-  ).toBeInTheDocument();
-  expect(experience).not.toHaveTextContent("Present");
+  for (const metric of ["49K points", "1st of 30", "58% fewer"]) {
+    expect(within(work).getByText(metric)).toBeVisible();
+  }
+  expect(screen.getByRole("link", { name: "Résumé (PDF)" })).toHaveAttribute("href", expect.stringMatching(/Jason-Hsu-Resume\.pdf$/));
 });
 
-test("shows the resume skill groups without outdated entries", () => {
+test("switches both the study and its accessible caption", () => {
   render(<App />);
-  const skills = screen.getByRole("region", { name: "The tools I work with." });
-  const groups = within(skills).getAllByRole("list");
-  expect(
-    groups.map((group) =>
-      within(group)
-        .getAllByRole("listitem")
-        .map((item) => item.textContent),
-    ),
-  ).toEqual([
-    [
-      "Python",
-      "Swift",
-      "C/C++",
-      "Dart",
-      "Kotlin",
-      "Java",
-      "JavaScript/TypeScript",
-      "SQL",
-    ],
-    [
-      "Flutter",
-      "Express.js",
-      "Node.js",
-      "OpenCV",
-      "React",
-      "PyTorch",
-      "ARKit",
-      "RealityKit",
-      "YOLO",
-      "ROS",
-    ],
-    [
-      "Git",
-      "Linux",
-      "Xcode",
-      "AWS",
-      "Firebase",
-      "MongoDB",
-      "RevenueCat",
-      "StoreKit",
-    ],
-  ]);
+  const forest = screen.getByRole("button", { name: "Forest" });
+  const court = screen.getByRole("button", { name: "Court" });
+  expect(forest).toHaveAttribute("aria-pressed", "true");
+  fireEvent.click(court);
+  expect(court).toHaveAttribute("aria-pressed", "true");
+  expect(forest).toHaveAttribute("aria-pressed", "false");
+  expect(screen.getByRole("img", { name: /shot trajectory/ })).toHaveAttribute("src", expect.stringMatching(/court-study\.webp$/));
+  expect(screen.getByText("Trajectory illustration")).toBeVisible();
+  fireEvent.click(forest);
+  expect(screen.getByText("LiDAR illustration")).toBeVisible();
 });
 
-test("mobile menu closes on navigation and Escape returns focus to its button", () => {
+test("an entry reveals its role, dates and original project link", () => {
+  render(<App />);
+  const entry = document.getElementById("carboncruise");
+  fireEvent.click(entry.querySelector("summary"));
+  expect(entry).toHaveAttribute("open");
+  expect(within(entry).getByText("May 2025 – April 2026")).toBeVisible();
+  expect(within(entry).getByRole("link", { name: "Visit CarbonCruise" })).toHaveAttribute("href", "https://www.korotu.com/carboncruise");
+});
+
+test("mobile menu closes on navigation and Escape restores focus", () => {
   render(<App />);
   const button = screen.getByRole("button", { name: "Open menu" });
   fireEvent.click(button);
-  expect(button).toHaveAttribute("aria-expanded", "true");
   const menu = document.getElementById("mobileMenu");
-  const projectsLink = within(menu).getByRole("link", { name: "Projects" });
-  projectsLink.focus();
+  const work = within(menu).getByRole("link", { name: "Work" });
+  work.focus();
   fireEvent.keyDown(window, { key: "Escape" });
-  expect(button).toHaveAttribute("aria-expanded", "false");
+  expect(menu).not.toBeVisible();
   expect(button).toHaveFocus();
   fireEvent.click(button);
-  fireEvent.click(projectsLink);
+  fireEvent.click(work);
   expect(button).toHaveAttribute("aria-expanded", "false");
 });

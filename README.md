@@ -1,8 +1,6 @@
-# Jason Hsu — Portfolio
+# Jason Hsu’s portfolio
 
-A responsive React portfolio with experience, selected projects, education, and technical skills.
-
-Live site: https://jasonhsu.ca
+A responsive React portfolio for [jasonhsu.ca](https://jasonhsu.ca). The home page pairs short project summaries with a switchable forest and basketball study. Open a project to read about the implementation, dates, and results.
 
 ## Local development
 
@@ -11,14 +9,12 @@ npm ci
 npm start
 ```
 
-Open http://localhost:3000. Run `npm run build` for a production build, or `npm test -- --watchAll=false` for the tests. The production build is configured for the custom domain `jasonhsu.ca`.
+Open http://localhost:3000. Run `npm test -- --watchAll=false` for the interface tests or `npm run build` for the production site. `npm run deploy` uses the existing GitHub Pages configuration and custom domain.
 
-## Content and design
+## Editing the portfolio
 
-- `src/data/resume.js`: experience and skills aligned with the September 2026 resume.
-- `src/App.js`: introduction, education, and the photo from `src/assets/img/New Profile Picture.JPG`.
-- `src/components/Projects.js`: original project summaries, plus the Peezs channel.
-- `src/App.css`: responsive layouts, locally hosted Centra fonts, and reduced-motion styles.
-- `public/favicon.svg`: JH monogram, also supplied as an ICO and 192/512px PNG app icons.
-
-The contact links open an email client; the portfolio does not require the legacy `server.js` mail server.
+- `src/data/portfolio.js` contains selected work, project links, and contact details.
+- `src/data/resume.js` contains the skill groups.
+- `src/components/StudyViewer.js` controls the two illustrations in `public/media`. Both are illustrative reconstructions. The BasketBot demo photograph is an actual project frame.
+- `src/App.js` contains the introduction and personal background. `src/App.css` defines the responsive layout.
+- `public/resume/Jason-Hsu-Resume.pdf` is the single-page public résumé linked from the site.
